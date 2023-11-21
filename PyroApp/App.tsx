@@ -5,9 +5,10 @@
  * @format
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
+  Button,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -24,12 +25,35 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import axios from 'axios';
+import {authService} from './services/auth.service';
 
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
 function Section({children, title}: SectionProps): JSX.Element {
+  useEffect(() => {
+    axios
+      .post(
+        'https://apidev.pyronear.org/login/access-token',
+        {
+          username: '',
+          password: '',
+        },
+        {
+          headers: {
+            accept: 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        },
+      )
+      .then(response => {
+        authService.saveToken(response.data.access_token);
+      })
+      .catch(error => console.log(error));
+  }, []);
+
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
@@ -55,6 +79,21 @@ function Section({children, title}: SectionProps): JSX.Element {
   );
 }
 
+async function getAlerts() {
+  var servicetoken = await authService.getToken();
+  axios
+    .get('https://apidev.pyronear.org/alerts/', {
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer ' + servicetoken,
+      },
+    })
+    .then(() => {
+      console.log('OKKKKK');
+    })
+    .catch(e => console.log('ERROR', e));
+}
+
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -76,6 +115,7 @@ function App(): JSX.Element {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
+          <Button title="Press me" onPress={getAlerts} />
           <Section title="Step One">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
             screen and then come back to see your edits.
