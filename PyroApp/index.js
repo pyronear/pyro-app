@@ -28,7 +28,7 @@ axios.interceptors.response.use(
   response => response,
   async error => {
     const statusCode = error.response ? error.response.status : null;
-    if (statusCode == 401) {
+    if (statusCode == 401 && authService.isLogged()) {
       await authService.removeToken();
       console.warn('Please login to access this resource');
     }
