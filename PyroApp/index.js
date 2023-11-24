@@ -24,4 +24,16 @@ axios.interceptors.request.use(
   error => Promise.reject(error),
 );
 
+axios.interceptors.response.use(
+  response => response,
+  async error => {
+    const statusCode = error.response ? error.response.status : null;
+    if (statusCode == 401) {
+      await authService.removeToken();
+      console.warn('Please login to access this resource');
+    }
+    return Promise.reject(error);
+  },
+);
+
 AppRegistry.registerComponent(appName, () => App);
