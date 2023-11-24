@@ -36,16 +36,13 @@ function Section({children, title}: SectionProps): JSX.Element {
   useEffect(() => {
     axios
       .post(
-        'https://apidev.pyronear.org/login/access-token',
+        '/login/access-token',
         {
           username: '',
           password: '',
         },
         {
-          headers: {
-            accept: 'application/json',
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         },
       )
       .then(response => {
@@ -80,16 +77,11 @@ function Section({children, title}: SectionProps): JSX.Element {
 }
 
 async function getAlerts() {
-  var servicetoken = await authService.getToken();
   axios
-    .get('https://apidev.pyronear.org/alerts/', {
-      headers: {
-        accept: 'application/json',
-        Authorization: 'Bearer ' + servicetoken,
-      },
-    })
-    .then(() => {
-      console.log('OKKKKK');
+    .get('/alerts/')
+    .then(response => {
+      console.log('OK!');
+      console.log(response.data[0]);
     })
     .catch(e => console.log('ERROR', e));
 }
