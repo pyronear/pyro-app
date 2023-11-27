@@ -25,8 +25,8 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import axios from 'axios';
 import {authService} from './services/auth.service';
+import {alertsService} from './services/alerts.service';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -34,21 +34,9 @@ type SectionProps = PropsWithChildren<{
 
 function Section({children, title}: SectionProps): JSX.Element {
   useEffect(() => {
-    axios
-      .post(
-        '/login/access-token',
-        {
-          username: '',
-          password: '',
-        },
-        {
-          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        },
-      )
-      .then(response => {
-        authService.saveToken(response.data.access_token);
-      })
-      .catch(error => console.log(error));
+    (async () => {
+      await authService.login();
+    })();
   }, []);
 
   const isDarkMode = useColorScheme() === 'dark';
@@ -76,16 +64,6 @@ function Section({children, title}: SectionProps): JSX.Element {
   );
 }
 
-async function getAlerts() {
-  axios
-    .get('/alerts/')
-    .then(response => {
-      console.log('OK!');
-      console.log(response.data[0]);
-    })
-    .catch(e => console.log('ERROR', e));
-}
-
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -107,7 +85,7 @@ function App(): JSX.Element {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <Button title="Press me" onPress={getAlerts} />
+          <Button title="Press me" onPress={alertsService.getAlerts} />
           <Section title="Step One">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
             screen and then come back to see your edits.
