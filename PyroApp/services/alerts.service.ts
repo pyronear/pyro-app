@@ -5,7 +5,9 @@ async function getAlerts() {
     .get('/alerts/')
     .then(response => {
       console.log('OK!');
-      console.log(response.data[0]);
+      if (response.data.length > 0) {
+        console.log(response.data[0]);
+      }
     })
     .catch(e => console.log('ERROR', e));
 }

@@ -23,8 +23,8 @@ async function login() {
     .post(
       '/login/access-token',
       {
-        username: 'CentraleSupelec',
-        password: '&Fib7!Eoc!LSfMpa',
+        username: '',
+        password: '',
       },
       {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},

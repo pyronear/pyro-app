@@ -34,9 +34,7 @@ type SectionProps = PropsWithChildren<{
 
 function Section({children, title}: SectionProps): JSX.Element {
   useEffect(() => {
-    (async () => {
-      await authService.login();
-    })();
+    authService.login();
   }, []);
 
   const isDarkMode = useColorScheme() === 'dark';
