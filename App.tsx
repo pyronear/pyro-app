@@ -102,20 +102,37 @@ const Authentification = () => {
   const [isdeconnected, setIsdeconnected] = useState(true);
   return (
     <View>
-      <Text>Authentification</Text>
-      <Text>Login</Text>
+      <Text
+        style={{
+          textAlign: "center",
+        }}>
+        Authentification Page
+      </Text>
+      <Text
+        style={{
+          textAlign: "center",
+        }}>
+        Login
+      </Text>
       <TextInput
         style={{
           height: 40,
+          textAlign: "center",
           borderColor: 'gray',
           borderWidth: 1,
         }}
         defaultValue=""
       />
-      <Text>Password</Text>
+      <Text
+        style={{
+          textAlign: "center",
+        }}>
+        Password
+      </Text>
       <TextInput
         style={{
           height: 40,
+          textAlign: "center",
           borderColor: 'gray',
           borderWidth: 1,
         }}
