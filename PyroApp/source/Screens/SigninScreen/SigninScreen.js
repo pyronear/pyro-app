@@ -11,14 +11,16 @@ const SigninScreen = () => {
     const navigation = useNavigation();
 
     const onSignInPressed = () => {
-        console.warn("Sign In")
+        console.warn("Sign In");
         // validate user
 
         navigation.navigate('Main');
     }
 
     const onForgotPasswordPressed = () => {
-        console.warn('onForgotPasswordPressed')
+        console.warn('onForgotPasswordPressed');
+
+        navigation.navigate('Forgot');
     }
 
     return(

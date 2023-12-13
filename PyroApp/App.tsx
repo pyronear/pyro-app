@@ -15,6 +15,7 @@ import {
 
 import SigninScreen from './source/Screens/SigninScreen';
 import MainScreen from './source/Screens/MainScreen';
+import ForgotScreen from './source/Screens/ForgotScreen';
 import Navigation from './source/Navigation';
 
 const styles = StyleSheet.create({
