@@ -15,6 +15,7 @@ import {
 
 import SigninScreen from './source/Screens/SigninScreen';
 import MainScreen from './source/Screens/MainScreen';
+import Navigation from './source/Navigation';
 
 const styles = StyleSheet.create({
   root: {
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
 const App = () => {
   return (
     <SafeAreaView style={styles.root}>
-      <SigninScreen />
+      <Navigation />
     </SafeAreaView>
   );
 };
