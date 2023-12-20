@@ -13,21 +13,16 @@ import {
   View,
 } from 'react-native';
 
-import SigninScreen from './source/Screens/SigninScreen';
-import MainScreen from './source/Screens/MainScreen';
-import ForgotScreen from './source/Screens/ForgotScreen';
-import Navigation from './source/Navigation';
+import { STYLES } from './source/styles';
 
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundcolor: '#F9FBFC'
-  },
-});
+import SigninScreen from './source/Screens/SigninScreen/SigninScreen';
+import MainScreen from './source/Screens/MainScreen/MainScreen';
+import ForgotScreen from './source/Screens/ForgotScreen/ForgotScreen';
+import Navigation from './source/Navigation';
 
 const App = () => {
   return (
-    <SafeAreaView style={styles.root}>
+    <SafeAreaView style={STYLES.root}>
       <Navigation />
     </SafeAreaView>
   );
