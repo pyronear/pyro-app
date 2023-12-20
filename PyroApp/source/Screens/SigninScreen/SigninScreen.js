@@ -1,21 +1,21 @@
 import React, {useState} from 'react';
-import {View, Text, useWindowDimensions} from 'react-native';
+import {View, Text} from 'react-native';
 import CustomInput from '../../Components/CustomInput';
 import CustomButton from '../../Components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
+import {authService} from '../../../services/auth.service';
 
 const SigninScreen = () => {
-  const {username, setUsername} = useState('');
-  const {password, setPassword} = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   const navigation = useNavigation();
 
-  const onSignInPressed = () => {
-    console.warn('Sign In');
-    // validate user
-
-    navigation.navigate('Main');
-  };
+  async function onSignInPressed() {
+    authService.login(username, password).then(() => {
+      navigation.navigate('Main');
+    });
+  }
 
   const onForgotPasswordPressed = () => {
     console.warn('onForgotPasswordPressed');
@@ -30,7 +30,6 @@ const SigninScreen = () => {
         placeholder="Username"
         value={username}
         setValue={setUsername}
-        // secureTextEntry={false}
       />
       <CustomInput
         placeholder="Password"
