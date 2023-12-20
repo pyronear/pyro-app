@@ -5,19 +5,11 @@
  * @format
  */
 
-import React, {useState} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import React from 'react';
+import {SafeAreaView} from 'react-native';
 
-import { STYLES } from './source/styles';
+import {STYLES} from './source/styles';
 
-import SigninScreen from './source/Screens/SigninScreen/SigninScreen';
-import MainScreen from './source/Screens/MainScreen/MainScreen';
-import ForgotScreen from './source/Screens/ForgotScreen/ForgotScreen';
 import Navigation from './source/Navigation';
 
 const App = () => {
