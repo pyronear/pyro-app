@@ -2,17 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, Button} from 'react-native';
 import {alertsService} from '../../../services/alerts.service';
 
-async function getAlert() {
-  return await alertsService.getAlerts();
-}
-
 const MainScreen = () => {
   const [alert, setAlert] = useState(undefined);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setIsLoading(true);
         const res = await alertsService.getAlerts();
         setAlert(res);
       } catch (error) {

@@ -5,6 +5,7 @@ async function getAlerts() {
     const response = await apiClient.get('/alerts/');
 
     if (response.data.length > 0) {
+      console.log('OK!');
       return response.data[0];
     }
   } catch (error) {
