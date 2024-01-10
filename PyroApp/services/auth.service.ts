@@ -19,8 +19,8 @@ async function isLogged(): Promise<boolean> {
 }
 
 async function login(username: string, password: string) {
-  apiClient
-    .post(
+  try {
+    const response = await apiClient.post(
       '/login/access-token',
       {
         username: username,
@@ -29,11 +29,15 @@ async function login(username: string, password: string) {
       {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       },
-    )
-    .then(response => {
-      saveToken(response.data.access_token);
-    })
-    .catch(error => console.log(error));
+    );
+
+    console.log('blob');
+    await saveToken(response.data.access_token);
+    console.log('jai enregistré mon token');
+  } catch (error) {
+    console.log(error);
+    // Handle the error as needed
+  }
 }
 
 export const authService = {

@@ -9,7 +9,7 @@ async function getAlerts() {
       return response.data[0];
     }
   } catch (error) {
-    console.error('ERROR', error);
+    console.error('ERROR lol', error);
     throw error; // Propagez l'erreur pour qu'elle soit gérée dans le useEffect
   }
 }

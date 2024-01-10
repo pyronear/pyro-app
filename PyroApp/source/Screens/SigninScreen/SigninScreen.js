@@ -12,9 +12,14 @@ const SigninScreen = () => {
   const navigation = useNavigation();
 
   async function onSignInPressed() {
-    authService.login(username, password).then(() => {
+    try {
+      await authService.login(username, password);
+      console.log('je navigue vers main');
       navigation.navigate('Main');
-    });
+    } catch (error) {
+      // Handle the error if needed
+      console.log(error);
+    }
   }
 
   const onForgotPasswordPressed = () => {
