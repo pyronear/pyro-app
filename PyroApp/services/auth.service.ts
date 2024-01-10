@@ -31,12 +31,9 @@ async function login(username: string, password: string) {
       },
     );
 
-    console.log('blob');
     await saveToken(response.data.access_token);
-    console.log('jai enregistré mon token');
   } catch (error) {
     console.log(error);
-    // Handle the error as needed
   }
 }
 

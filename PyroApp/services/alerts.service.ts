@@ -5,12 +5,11 @@ async function getAlerts() {
     const response = await apiClient.get('/alerts/');
 
     if (response.data.length > 0) {
-      console.log('OK!');
       return response.data[0];
     }
   } catch (error) {
-    console.error('ERROR lol', error);
-    throw error; // Propagez l'erreur pour qu'elle soit gérée dans le useEffect
+    console.error('ERROR', error);
+    throw error;
   }
 }
 
