@@ -1,15 +1,16 @@
 import apiClient from './apiClient.service';
 
 async function getAlerts() {
-  apiClient
-    .get('/alerts/')
-    .then(response => {
-      console.log('OK!');
-      if (response.data.length > 0) {
-        console.log(response.data[0]);
-      }
-    })
-    .catch(e => console.log('ERROR', e));
+  try {
+    const response = await apiClient.get('/alerts/');
+
+    if (response.data.length > 0) {
+      return response.data[0];
+    }
+  } catch (error) {
+    console.error('ERROR', error);
+    throw error;
+  }
 }
 
 export const alertsService = {
