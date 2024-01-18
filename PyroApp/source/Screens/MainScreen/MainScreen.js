@@ -58,11 +58,21 @@ const MainScreen = () => {
               backgroundColor: 'red',
             }}>
             <LeafletView
-              mapMarkers={[
+              mapShapes={[
                 {
-                  position: DEFAULT_COORDINATE,
-                  icon: '📍',
-                  size: [32, 32],
+                  shapeType: 'Polyline',
+                  positions: [
+                    [25.01, 29.09],
+                    [DEFAULT_COORDINATE.lat, DEFAULT_COORDINATE.lng],
+                    [52.505, 29.09],
+                  ],
+                  color: 'red',
+                },
+                {
+                  shapeType: 'Circle',
+                  center: [DEFAULT_COORDINATE.lat, DEFAULT_COORDINATE.lng],
+                  radius: 32,
+                  color: 'red',
                 },
               ]}
               mapCenterPosition={DEFAULT_COORDINATE}
