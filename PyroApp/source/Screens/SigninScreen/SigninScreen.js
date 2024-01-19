@@ -16,6 +16,7 @@ const SigninScreen = () => {
   async function onSignInPressed() {
     try {
       await authService.login(username, password);
+      setInError(false);
       navigation.navigate('Main');
     } catch (error) {
       setInError(true);
