@@ -4,6 +4,7 @@ import CustomInput from '../../Components/CustomInput';
 import CustomButton from '../../Components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import {authService} from '../../../services/auth.service';
+import {STYLES} from '../../styles';
 
 const SigninScreen = () => {
   const [username, setUsername] = useState('');
@@ -27,27 +28,28 @@ const SigninScreen = () => {
   };
 
   return (
-    <View>
-      <Text> Sign In Screen </Text>
-      <CustomInput
-        placeholder="Username"
-        value={username}
-        setValue={setUsername}
-      />
-      <CustomInput
-        placeholder="Password"
-        value={password}
-        setValue={setPassword}
-        secureTextEntry={true}
-      />
+    <View style={STYLES.root}>
+      <View style={STYLES.signin_input}>
+        <CustomInput
+          placeholder="Utilisateur"
+          value={username}
+          setValue={setUsername}
+        />
+        <CustomInput
+          placeholder="Mot de passe"
+          value={password}
+          setValue={setPassword}
+          secureTextEntry={true}
+        />
 
-      <CustomButton text="Sign In" onPress={onSignInPressed} />
+        <CustomButton text="Sign In" onPress={onSignInPressed} />
 
-      <CustomButton
-        text="Forgot Password"
-        onPress={onForgotPasswordPressed}
-        type="TERTIARY"
-      />
+        <CustomButton
+          text="Forgot Password"
+          onPress={onForgotPasswordPressed}
+          type="TERTIARY"
+        />
+      </View>
     </View>
   );
 };

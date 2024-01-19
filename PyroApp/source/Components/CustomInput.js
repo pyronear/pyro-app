@@ -1,19 +1,17 @@
-import React from 'react'
-import { View, Text, TextInput, StyleSheet } from 'react-native'
-import { STYLES } from '../styles'
+import React from 'react';
+import {View, Text, TextInput, StyleSheet} from 'react-native';
+import {STYLES} from '../styles';
 
-const CustomInput = ( {value, setValue, placeholder, secureTextEntry}) => {
-    return(
-        <View style={STYLES.container_input}>
-            <TextInput
-            value={value}
-            onChangeText={setValue}
-            placeholder = {placeholder}
-            styles={STYLES.input}
-            secureTextEntry={secureTextEntry}
-            />
-        </View>
-    );
+const CustomInput = ({value, setValue, placeholder, secureTextEntry}) => {
+  return (
+    <TextInput
+      value={value}
+      onChangeText={setValue}
+      placeholder={placeholder}
+      style={STYLES.input}
+      secureTextEntry={secureTextEntry}
+    />
+  );
 };
 
-export default CustomInput
+export default CustomInput;
