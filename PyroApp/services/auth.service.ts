@@ -33,7 +33,7 @@ async function login(username: string, password: string) {
 
     await saveToken(response.data.access_token);
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 }
 

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Image} from 'react-native';
+import {View, Image, Text} from 'react-native';
 import CustomInput from '../../Components/CustomInput';
 import CustomButton from '../../Components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
@@ -9,6 +9,7 @@ import {STYLES} from '../../styles';
 const SigninScreen = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [inError, setInError] = useState(false);
 
   const navigation = useNavigation();
 
@@ -17,6 +18,7 @@ const SigninScreen = () => {
       await authService.login(username, password);
       navigation.navigate('Main');
     } catch (error) {
+      setInError(true);
       console.log(error);
     }
   }
@@ -38,6 +40,11 @@ const SigninScreen = () => {
           setValue={setPassword}
           secureTextEntry={true}
         />
+        {inError ? (
+          <Text style={STYLES.error_text_signin}>Ce compte n'existe pas</Text>
+        ) : (
+          ''
+        )}
 
         <CustomButton text="CONNEXION" onPress={onSignInPressed} />
       </View>

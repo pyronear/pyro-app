@@ -56,4 +56,11 @@ export const STYLES = {
     width: 277,
     height: 57,
   },
+  // Error text SignIn
+  error_text_signin: {
+    paddingHorizontal: 10,
+    paddingBottom: 10,
+    color: 'red',
+    fontStyle: 'italic',
+  },
 };
