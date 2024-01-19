@@ -18,6 +18,7 @@ export const STYLES = {
   signin_input: {
     backgroundColor: '#F7FAFF',
     paddingHorizontal: 20,
+    paddingVertical: 20,
     marginHorizontal: 20,
   },
   // Button
@@ -28,7 +29,6 @@ export const STYLES = {
     marginVertical: 5,
 
     alignItems: 'center',
-    borderRadius: 5,
   },
   container_button_PRIMARY: {
     backgroundColor: COLORS.background_home,
@@ -51,8 +51,8 @@ export const STYLES = {
     borderBottomWidth: 1,
     padding: 10,
   },
+  // Logo Pyronear
   logo_pyronear: {
-    marginTop: 10,
     width: 277,
     height: 57,
   },

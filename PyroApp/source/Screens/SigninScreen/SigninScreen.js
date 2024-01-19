@@ -21,12 +21,6 @@ const SigninScreen = () => {
     }
   }
 
-  const onForgotPasswordPressed = () => {
-    console.warn('onForgotPasswordPressed');
-
-    navigation.navigate('Forgot');
-  };
-
   return (
     <View style={STYLES.root}>
       <View style={STYLES.signin_input}>
@@ -46,12 +40,6 @@ const SigninScreen = () => {
         />
 
         <CustomButton text="CONNEXION" onPress={onSignInPressed} />
-
-        <CustomButton
-          text="Forgot Password"
-          onPress={onForgotPasswordPressed}
-          type="TERTIARY"
-        />
       </View>
     </View>
   );
