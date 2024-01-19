@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, Image} from 'react-native';
 import CustomInput from '../../Components/CustomInput';
 import CustomButton from '../../Components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
@@ -30,6 +30,9 @@ const SigninScreen = () => {
   return (
     <View style={STYLES.root}>
       <View style={STYLES.signin_input}>
+        <Image
+          source={require('../../../assets/pyronear_logo.png')}
+          style={STYLES.logo_pyronear}></Image>
         <CustomInput
           placeholder="Utilisateur"
           value={username}

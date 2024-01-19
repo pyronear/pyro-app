@@ -43,22 +43,16 @@ export const STYLES = {
     color: COLORS.grey_text,
   },
   // Input
-  container_input: {
-    backgroundcolor: COLORS.background_input,
-    width: '100%',
-
-    borderColor: COLORS.border_input,
-    borderWidth: 1,
-    borderRadius: 5,
-
-    paddingHorizontal: 10,
-    marginVertical: 5,
-  },
   input: {
     height: 40,
-    margin: 12,
+    margin: 10,
     borderBottomColor: '#000000',
     borderBottomWidth: 1,
     padding: 10,
+  },
+  logo_pyronear: {
+    marginTop: 10,
+    width: 277,
+    height: 57,
   },
 };
