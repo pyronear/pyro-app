@@ -13,6 +13,7 @@ export const STYLES = {
   root: {
     flex: 1,
     backgroundColor: COLORS.background_home,
+    justifyContent: 'center',
   },
   signin_input: {
     backgroundColor: '#F7FAFF',
