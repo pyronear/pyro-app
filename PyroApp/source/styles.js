@@ -30,7 +30,7 @@ export const STYLES = {
     borderRadius: 5,
   },
   container_button_PRIMARY: {
-    backgroundColor: COLORS.background_button,
+    backgroundColor: COLORS.background_home,
   },
   container_button_TERTIARY: {},
 

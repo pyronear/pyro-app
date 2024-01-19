@@ -42,7 +42,7 @@ const SigninScreen = () => {
           secureTextEntry={true}
         />
 
-        <CustomButton text="Sign In" onPress={onSignInPressed} />
+        <CustomButton text="CONNEXION" onPress={onSignInPressed} />
 
         <CustomButton
           text="Forgot Password"
