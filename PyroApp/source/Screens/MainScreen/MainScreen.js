@@ -4,15 +4,20 @@ import {alertsService} from '../../../services/alerts.service';
 import CustomButton from '../../Components/CustomButton';
 import {authService} from '../../../services/auth.service';
 import {useNavigation} from '@react-navigation/native';
-import {LatLng, LeafletView} from 'react-native-leaflet-view';
+import {LeafletView} from 'react-native-leaflet-view';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 const MainScreen = () => {
   const [alert, setAlert] = useState(undefined);
-  const [DEFAULT_COORDINATE, setDefaultCoordinate] = useState({
-    lat: 37.78825,
-    lng: -122.4324,
+  const [mapCenter, setMapCenter] = useState({
+    lat: 1.0,
+    lng: 1.0,
   });
+  const [triangleCoordinates, setTriangleCoordinates] = useState([
+    [1, 1],
+    [1, 1],
+    [1, 1],
+  ]);
 
   const navigation = useNavigation();
 
@@ -28,15 +33,15 @@ const MainScreen = () => {
       try {
         const res = await alertsService.getAlert();
         setAlert(res);
-        setDefaultCoordinate({
+        setMapCenter({
           lat: res.lat,
           lng: res.lon,
         });
-        console.log('ALERT', alert);
-        const coordinates = alertsService.calculateCoordinatesTriangle(res);
-        console.log('COORDINATES', coordinates);
+        const calculatedCoordinates =
+          alertsService.calculateCoordinatesTriangle(res);
+        setTriangleCoordinates(calculatedCoordinates);
       } catch (error) {
-        console.error('Error fetching alerts:', error);
+        console.error('Error fetching alert details:', error);
       }
     };
 
@@ -62,28 +67,25 @@ const MainScreen = () => {
             <LeafletView
               mapShapes={[
                 {
-                  shapeType: 'Polyline',
-                  positions: [
-                    [25.01, 29.09],
-                    [DEFAULT_COORDINATE.lat, DEFAULT_COORDINATE.lng],
-                    [52.505, 29.09],
-                  ],
+                  shapeType: 'Polygon',
+                  positions: triangleCoordinates,
                   color: 'red',
                 },
                 {
                   shapeType: 'Circle',
-                  center: [DEFAULT_COORDINATE.lat, DEFAULT_COORDINATE.lng],
-                  radius: 32,
+                  center: [mapCenter.lat, mapCenter.lng],
+                  radius: 400,
                   color: 'red',
                 },
               ]}
-              mapCenterPosition={DEFAULT_COORDINATE}
+              mapCenterPosition={mapCenter}
             />
           </View>
           <Text>Date de création: {alert.created_at}</Text>
           <Text>ID de l'événement: {alert.event_id}</Text>
           <Text>Latitude: {alert.lat}</Text>
           <Text>Longitude: {alert.lon}</Text>
+          <Text>Azimuth: {alert.azimuth}°</Text>
 
           <CustomButton onPress={onLogOutPress} text="Log out" />
         </>
