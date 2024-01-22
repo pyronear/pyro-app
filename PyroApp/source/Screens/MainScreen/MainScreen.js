@@ -26,13 +26,15 @@ const MainScreen = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await alertsService.getAlerts();
-        console.log('RESSSSSS', res);
+        const res = await alertsService.getAlert();
         setAlert(res);
         setDefaultCoordinate({
           lat: res.lat,
           lng: res.lon,
         });
+        console.log('ALERT', alert);
+        const coordinates = alertsService.calculateCoordinatesTriangle(res);
+        console.log('COORDINATES', coordinates);
       } catch (error) {
         console.error('Error fetching alerts:', error);
       }
