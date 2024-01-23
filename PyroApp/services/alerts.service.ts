@@ -4,7 +4,7 @@ const CAMERA_OPENING_ANGLE = 87;
 const CAMERA_RANGE_KM = 15;
 const CONVERTION_KM_TO_DEG = 111.0;
 
-type alert = {
+export type Alert = {
   id: number;
   created_at: string;
   lat: number;
@@ -16,17 +16,9 @@ type alert = {
   device_id: number;
 };
 
-async function getAlert(): Promise<alert | undefined> {
-  try {
-    const response = await apiClient.get('/alerts/');
-
-    if (response.data.length > 0) {
-      return response.data[0];
-    }
-  } catch (error) {
-    console.error('ERROR', error);
-    throw error;
-  }
+async function getAlert(): Promise<Alert> {
+  const response = await apiClient.get('/alerts/');
+  return response.data[0];
 }
 
 // Fonction pour convertir les degrés en radians
@@ -34,7 +26,7 @@ function toRadians(degrees: number): number {
   return degrees * (Math.PI / 180);
 }
 
-function calculateCoordinatesTriangle(alert: alert): number[][] {
+function calculateCoordinatesTriangle(alert: Alert): number[][] {
   // calcul des azimuths en radians
   const azimuth1 = toRadians(alert.azimuth - 0.5 * CAMERA_OPENING_ANGLE);
   const azimuth2 = toRadians(alert.azimuth + 0.5 * CAMERA_OPENING_ANGLE);

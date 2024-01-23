@@ -63,4 +63,12 @@ export const STYLES = {
     color: 'red',
     fontStyle: 'italic',
   },
+  // Map View
+  map_view: {
+    position: 'absolute',
+    top: 200,
+    left: 0,
+    width: '100%',
+    height: 200,
+  },
 };

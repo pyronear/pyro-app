@@ -1,23 +1,22 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Button} from 'react-native';
-import {alertsService} from '../../../services/alerts.service';
+import {View, Text, ViewStyle} from 'react-native';
+import {alertsService, Alert} from '../../../services/alerts.service';
 import CustomButton from '../../Components/CustomButton';
 import {authService} from '../../../services/auth.service';
 import {useNavigation} from '@react-navigation/native';
-import {LeafletView} from 'react-native-leaflet-view';
+import {LeafletView, LatLng, MapShapeType} from 'react-native-leaflet-view';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {STYLES} from '../../styles';
 
 const MainScreen = () => {
-  const [alert, setAlert] = useState(undefined);
-  const [mapCenter, setMapCenter] = useState({
-    lat: 1.0,
-    lng: 1.0,
+  const [alert, setAlert] = useState<Alert | undefined>(undefined);
+  const [mapCenter, setMapCenter] = useState<LatLng | undefined>({
+    lat: 44.6,
+    lng: 4.52,
   });
-  const [triangleCoordinates, setTriangleCoordinates] = useState([
-    [1, 1],
-    [1, 1],
-    [1, 1],
-  ]);
+  const [triangleCoordinates, setTriangleCoordinates] = useState<
+    LatLng[] | undefined
+  >(undefined);
 
   const navigation = useNavigation();
 
@@ -31,13 +30,13 @@ const MainScreen = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await alertsService.getAlert();
+        const res: Alert = await alertsService.getAlert();
         setAlert(res);
         setMapCenter({
           lat: res.lat,
           lng: res.lon,
         });
-        const calculatedCoordinates =
+        const calculatedCoordinates: LatLng[] =
           alertsService.calculateCoordinatesTriangle(res);
         setTriangleCoordinates(calculatedCoordinates);
       } catch (error) {
@@ -55,24 +54,16 @@ const MainScreen = () => {
         <Text>Loading...</Text>
       ) : (
         <>
-          <View
-            style={{
-              position: 'absolute',
-              top: 200,
-              left: 0,
-              width: '100%',
-              height: 200,
-              backgroundColor: 'red',
-            }}>
+          <View style={STYLES.map_view as ViewStyle}>
             <LeafletView
               mapShapes={[
                 {
-                  shapeType: 'Polygon',
+                  shapeType: MapShapeType.POLYGON,
                   positions: triangleCoordinates,
                   color: 'red',
                 },
                 {
-                  shapeType: 'Circle',
+                  shapeType: MapShapeType.CIRCLE,
                   center: [mapCenter.lat, mapCenter.lng],
                   radius: 400,
                   color: 'red',
