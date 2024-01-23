@@ -1,3 +1,4 @@
+import {LatLng} from 'react-native-leaflet-view';
 import apiClient from './apiClient.service';
 
 const CAMERA_OPENING_ANGLE = 87;
@@ -26,7 +27,7 @@ function toRadians(degrees: number): number {
   return degrees * (Math.PI / 180);
 }
 
-function calculateCoordinatesTriangle(alert: Alert): number[][] {
+function calculateCoordinatesTriangle(alert: Alert): LatLng[] {
   // calcul des azimuths en radians
   const azimuth1 = toRadians(alert.azimuth - 0.5 * CAMERA_OPENING_ANGLE);
   const azimuth2 = toRadians(alert.azimuth + 0.5 * CAMERA_OPENING_ANGLE);
@@ -53,10 +54,10 @@ function calculateCoordinatesTriangle(alert: Alert): number[][] {
     alert.lon + dist_lng_2 / CONVERTION_KM_TO_DEG / Math.cos(latitude);
 
   return [
-    [lat1, lng1],
-    [alert.lat, alert.lon],
-    [lat2, lng2],
-    [lat1, lng1],
+    {lat: lat1, lng: lng1},
+    {lat: alert.lat, lng: alert.lon},
+    {lat: lat2, lng: lng2},
+    {lat: lat1, lng: lng1},
   ];
 }
 
