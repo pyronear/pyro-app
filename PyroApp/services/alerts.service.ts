@@ -17,6 +17,11 @@ export type Alert = {
   device_id: number;
 };
 
+async function getAlerts(): Promise<Alert[]> {
+  const response = await apiClient.get('/alerts/');
+  return response.data;
+}
+
 async function getAlert(): Promise<Alert> {
   const response = await apiClient.get('/alerts/');
   return response.data[0];
@@ -62,6 +67,7 @@ function calculateCoordinatesTriangle(alert: Alert): LatLng[] {
 }
 
 export const alertsService = {
+  getAlerts,
   getAlert,
   calculateCoordinatesTriangle,
 };
