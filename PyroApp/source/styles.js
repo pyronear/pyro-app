@@ -89,4 +89,24 @@ export const STYLES = {
       fontSize: 20,
     },
   },
+  // Alert Item
+  alert_item: {
+    container: {
+      padding: 20,
+      borderBottomColor: 'grey',
+      borderBottomWidth: 1,
+    },
+    title: {
+      fontWeight: 'bold',
+      fontSize: 15,
+      marginBottom: 5,
+    },
+    circle: {
+      height: 30,
+      width: 30,
+      borderRadius: 15,
+      backgroundColor: 'orange',
+      marginRight: 15,
+    },
+  },
 };
