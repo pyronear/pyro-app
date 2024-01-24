@@ -21,7 +21,6 @@ function AlertsListScreen({navigation}: AlertsListNavigationProps) {
   }, []);
 
   const navigateToMainScreen = (alertId: number) => {
-    console.log(`Navigation vers l alerte ${alertId}`);
     navigation.navigate('Main', {alertId: alertId});
   };
 

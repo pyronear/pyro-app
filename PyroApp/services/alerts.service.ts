@@ -23,9 +23,8 @@ async function getAlerts(): Promise<Alert[]> {
 }
 
 async function getAlert(alertId: number): Promise<Alert> {
-  console.log('JE DEMANDE ALERTE', alertId);
-  const response = await apiClient.get('/alerts/');
-  return response.data[0];
+  const response = await apiClient.get(`/alerts/${alertId}/`);
+  return response.data;
 }
 
 // Fonction pour convertir les degrés en radians
