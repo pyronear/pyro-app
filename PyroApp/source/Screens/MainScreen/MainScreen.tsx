@@ -7,8 +7,10 @@ import {useNavigation} from '@react-navigation/native';
 import {LeafletView, LatLng, MapShapeType} from 'react-native-leaflet-view';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {STYLES} from '../../styles';
+import {MainNavigationProps} from '../../Navigation';
 
-const MainScreen = () => {
+const MainScreen = ({route}: MainNavigationProps) => {
+  const alertId: number = route.params.alertId;
   const [alert, setAlert] = useState<Alert | undefined>(undefined);
   const [mapCenter, setMapCenter] = useState<LatLng | undefined>({
     lat: 44.6,
@@ -30,7 +32,7 @@ const MainScreen = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res: Alert = await alertsService.getAlert();
+        const res: Alert = await alertsService.getAlert(alertId);
         setAlert(res);
         setMapCenter({
           lat: res.lat,

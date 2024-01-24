@@ -22,7 +22,8 @@ async function getAlerts(): Promise<Alert[]> {
   return response.data;
 }
 
-async function getAlert(): Promise<Alert> {
+async function getAlert(alertId: number): Promise<Alert> {
+  console.log('JE DEMANDE ALERTE', alertId);
   const response = await apiClient.get('/alerts/');
   return response.data[0];
 }

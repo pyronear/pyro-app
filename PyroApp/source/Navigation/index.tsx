@@ -4,8 +4,25 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SigninScreen from '../Screens/SigninScreen/SigninScreen';
 import MainScreen from '../Screens/MainScreen/MainScreen';
 import AlertsListScreen from '../Screens/AlertsListScreen/AlertsListScreen';
+import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-const Stack = createNativeStackNavigator();
+type StackParamList = {
+  Signin: undefined;
+  Main: {alertId: number};
+  AlertsList: undefined;
+};
+
+const Stack = createNativeStackNavigator<StackParamList>();
+
+export type MainNavigationProps = NativeStackScreenProps<
+  StackParamList,
+  'Main'
+>;
+
+export type AlertsListNavigationProps = NativeStackScreenProps<
+  StackParamList,
+  'AlertsList'
+>;
 
 const Navigation = () => {
   return (

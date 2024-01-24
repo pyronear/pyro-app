@@ -2,11 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {FlatList, Text, View} from 'react-native';
 import {Alert, alertsService} from '../../../services/alerts.service';
 import AlertItem from '../../Components/AlertItem';
-import {useNavigation} from '@react-navigation/native';
+import {AlertsListNavigationProps} from '../../Navigation';
 
-function AlertsListScreen() {
+function AlertsListScreen({navigation}: AlertsListNavigationProps) {
   const [alerts, setAlerts] = useState<Alert[] | undefined>(undefined);
-  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +22,7 @@ function AlertsListScreen() {
 
   const navigateToMainScreen = (alertId: number) => {
     console.log(`Navigation vers l alerte ${alertId}`);
-    navigation.navigate('Main');
+    navigation.navigate('Main', {alertId: alertId});
   };
 
   return (
