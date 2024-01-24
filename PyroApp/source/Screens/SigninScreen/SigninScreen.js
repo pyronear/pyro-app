@@ -17,7 +17,7 @@ const SigninScreen = () => {
     try {
       await authService.login(username, password);
       setInError(false);
-      navigation.navigate('Main');
+      navigation.navigate('AlertsList');
     } catch (error) {
       setInError(true);
       console.log(error);
