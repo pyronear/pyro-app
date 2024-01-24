@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, Text, View} from 'react-native';
 import {Alert, alertsService} from '../../../services/alerts.service';
+import AlertItem from '../../Components/AlertItem';
 
 function AlertsListScreen() {
   const [alerts, setAlerts] = useState<Alert[] | undefined>(undefined);
@@ -21,7 +22,10 @@ function AlertsListScreen() {
   return (
     <View>
       <Text>LISTE ALERTES</Text>
-      <FlatList data={alerts} renderItem={({item}) => <Text>{item.id}</Text>} />
+      <FlatList
+        data={alerts}
+        renderItem={({item}) => <AlertItem alert={item} />}
+      />
     </View>
   );
 }
