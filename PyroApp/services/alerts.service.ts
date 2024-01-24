@@ -18,7 +18,7 @@ export type Alert = {
 };
 
 async function getAlerts(): Promise<Alert[]> {
-  const response = await apiClient.get('/alerts/');
+  const response = await apiClient.get('/alerts/ongoing');
   return response.data;
 }
 
