@@ -52,9 +52,13 @@ export const STYLES = {
     padding: 10,
   },
   // Logo Pyronear
-  logo_pyronear: {
+  logo_pyronear_big: {
     width: 277,
     height: 57,
+  },
+  logo_pyronear_small: {
+    width: 139,
+    height: 29,
   },
   // Error text SignIn
   error_text_signin: {
@@ -70,5 +74,19 @@ export const STYLES = {
     left: 0,
     width: '100%',
     height: 200,
+  },
+  // header list
+  alerts_list: {
+    header: {
+      height: 65,
+      backgroundColor: COLORS.background_home,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    title: {
+      color: 'white',
+      fontWeight: 'bold',
+      fontSize: 20,
+    },
   },
 };
