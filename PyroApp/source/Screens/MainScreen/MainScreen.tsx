@@ -3,12 +3,13 @@ import {View, Text, ViewStyle} from 'react-native';
 import {alertsService, Alert} from '../../../services/alerts.service';
 import CustomButton from '../../Components/CustomButton';
 import {authService} from '../../../services/auth.service';
-import {useNavigation} from '@react-navigation/native';
 import {LeafletView, LatLng, MapShapeType} from 'react-native-leaflet-view';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {STYLES} from '../../styles';
+import {MainNavigationProps} from '../../Navigation';
 
-const MainScreen = () => {
+const MainScreen = ({route, navigation}: MainNavigationProps) => {
+  const alertId: number = route.params.alertId;
   const [alert, setAlert] = useState<Alert | undefined>(undefined);
   const [mapCenter, setMapCenter] = useState<LatLng | undefined>({
     lat: 44.6,
@@ -17,8 +18,6 @@ const MainScreen = () => {
   const [triangleCoordinates, setTriangleCoordinates] = useState<
     LatLng[] | undefined
   >(undefined);
-
-  const navigation = useNavigation();
 
   async function onLogOutPress() {
     console.warn('Log out');
@@ -30,7 +29,7 @@ const MainScreen = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res: Alert = await alertsService.getAlert();
+        const res: Alert = await alertsService.getAlert(alertId);
         setAlert(res);
         setMapCenter({
           lat: res.lat,
@@ -45,11 +44,11 @@ const MainScreen = () => {
     };
 
     fetchData();
-  }, []);
+  }, [alertId]);
 
   return (
     <SafeAreaView>
-      <Text> Détails de l'alerte </Text>
+      <Text> Détails de l'alerte {alertId} </Text>
       {alert === undefined ? (
         <Text>Loading...</Text>
       ) : (

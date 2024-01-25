@@ -17,9 +17,14 @@ export type Alert = {
   device_id: number;
 };
 
-async function getAlert(): Promise<Alert> {
-  const response = await apiClient.get('/alerts/');
-  return response.data[0];
+async function getAlerts(): Promise<Alert[]> {
+  const response = await apiClient.get('/alerts/ongoing');
+  return response.data;
+}
+
+async function getAlert(alertId: number): Promise<Alert> {
+  const response = await apiClient.get(`/alerts/${alertId}/`);
+  return response.data;
 }
 
 // Fonction pour convertir les degrés en radians
@@ -62,6 +67,7 @@ function calculateCoordinatesTriangle(alert: Alert): LatLng[] {
 }
 
 export const alertsService = {
+  getAlerts,
   getAlert,
   calculateCoordinatesTriangle,
 };
