@@ -17,7 +17,7 @@ const SigninScreen = () => {
     try {
       await authService.login(username, password);
       setInError(false);
-      navigation.navigate('Main');
+      navigation.navigate('AlertsList');
     } catch (error) {
       setInError(true);
       console.log(error);
@@ -29,7 +29,8 @@ const SigninScreen = () => {
       <View style={STYLES.signin_input}>
         <Image
           source={require('../../../assets/pyronear_logo.png')}
-          style={STYLES.logo_pyronear}></Image>
+          style={STYLES.logo_pyronear_big}
+        />
         <CustomInput
           placeholder="Utilisateur"
           value={username}

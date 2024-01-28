@@ -52,9 +52,13 @@ export const STYLES = {
     padding: 10,
   },
   // Logo Pyronear
-  logo_pyronear: {
+  logo_pyronear_big: {
     width: 277,
     height: 57,
+  },
+  logo_pyronear_small: {
+    width: 139,
+    height: 29,
   },
   // Error text SignIn
   error_text_signin: {
@@ -62,5 +66,47 @@ export const STYLES = {
     paddingBottom: 10,
     color: 'red',
     fontStyle: 'italic',
+  },
+  // Map View
+  map_view: {
+    position: 'absolute',
+    top: 200,
+    left: 0,
+    width: '100%',
+    height: 200,
+  },
+  // header list
+  alerts_list: {
+    header: {
+      height: 65,
+      backgroundColor: COLORS.background_home,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    title: {
+      color: 'white',
+      fontWeight: 'bold',
+      fontSize: 20,
+    },
+  },
+  // Alert Item
+  alert_item: {
+    container: {
+      padding: 20,
+      borderBottomColor: 'grey',
+      borderBottomWidth: 1,
+    },
+    title: {
+      fontWeight: 'bold',
+      fontSize: 15,
+      marginBottom: 5,
+    },
+    circle: {
+      height: 30,
+      width: 30,
+      borderRadius: 15,
+      backgroundColor: 'orange',
+      marginRight: 15,
+    },
   },
 };
