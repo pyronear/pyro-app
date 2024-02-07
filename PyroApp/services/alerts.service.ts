@@ -1,4 +1,4 @@
-import {LatLng} from 'react-native-leaflet-view';
+import {LatLng} from '@charlespalmerbf/react-native-leaflet-js';
 import apiClient from './apiClient.service';
 
 const CAMERA_OPENING_ANGLE = 87;
