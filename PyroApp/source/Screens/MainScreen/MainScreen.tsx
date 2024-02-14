@@ -3,7 +3,11 @@ import {View, Text, ViewStyle} from 'react-native';
 import {alertsService, Alert} from '../../../services/alerts.service';
 import CustomButton from '../../Components/CustomButton';
 import {authService} from '../../../services/auth.service';
-import {LeafletView, LatLng, MapShapeType} from 'react-native-leaflet-view';
+import {
+  LeafletView,
+  LatLng,
+  MapShapeType,
+} from '@charlespalmerbf/react-native-leaflet-js';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {STYLES} from '../../styles';
 import {MainNavigationProps} from '../../Navigation';
