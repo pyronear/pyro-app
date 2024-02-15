@@ -109,4 +109,10 @@ export const STYLES = {
       marginRight: 15,
     },
   },
+  // Image
+  image: {
+    width: 50,
+    height: 50,
+    resizeMode: 'contain',
+  },
 };
