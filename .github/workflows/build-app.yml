@@ -25,9 +25,6 @@ jobs:
     - name: List files
       run: |
         ls -R android/
-    - name: Create dir if not exists
-      run: |
-        mkdir -p android/app/build/outputs/apk/
     - name: Upload Artifact
       uses: actions/upload-artifact@v1
       with:
