@@ -21,7 +21,7 @@ jobs:
         npm install
     - name: Build Android Release
       run: |
-        cd android && ./gradlew assembleDebug
+        cd android && ./gradlew assembleRelease
     - name: List files
       run: |
         ls -R android/
