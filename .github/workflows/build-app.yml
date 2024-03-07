@@ -24,7 +24,7 @@ jobs:
         cd android && ./gradlew assembleDebug
     - name: List files
       run: |
-        ls -R android/app/build
+        ls -R android/
     - name: Create dir if not exists
       run: |
         mkdir -p android/app/build/outputs/apk/
@@ -33,3 +33,4 @@ jobs:
       with:
         name: app-debug.apk
         path: android/app/build/outputs/apk/
+        retention-days: 30
