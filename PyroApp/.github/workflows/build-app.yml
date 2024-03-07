@@ -1,0 +1,33 @@
+name: Build an apk and push it
+
+on:
+  push:
+    branches:
+      - main
+      - build-github-action
+
+jobs:
+  build:
+    defaults:
+      run:
+        working-directory: PyroApp
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install npm dependencies
+        run: |
+          npm install
+      - name: Build Android Release
+        run: |
+          cd android && ./gradlew assembleDebug --no-daemon
+      - name: List files
+        run: |
+          ls -R android/
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-debug.apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 30
