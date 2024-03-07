@@ -27,9 +27,9 @@ jobs:
         ls -R android/app/build
     - name: Create dir if not exists
       run: |
-        mkdir -p android/app/build/outputs/apk/debug
+        mkdir -p android/app/build/outputs/apk/
     - name: Upload Artifact
       uses: actions/upload-artifact@v1
       with:
         name: app-debug.apk
-        path: android/app/build/outputs/apk/debug/
+        path: android/app/build/outputs/apk/
