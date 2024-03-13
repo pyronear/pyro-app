@@ -7,7 +7,7 @@ import {LeafletView, LatLng, MapShapeType} from '@charlespalmerbf/react-native-l
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {STYLES} from '../../styles';
 import {MainNavigationProps} from '../../Navigation';
-import { FlatList } from 'react-native';
+import { FlatList, ScrollView } from 'react-native';
 
 const MainScreen = ({route, navigation}: MainNavigationProps) => {
   const alertId: number = route.params.alertId;
@@ -111,13 +111,17 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
 
           <CustomButton onPress={onLogOutPress} text="Log out" />
 
-          <FlatList
-            data={media} // Votre tableau de médias
-            renderItem={({ item }) => (
-              <Image source={{ uri: item.url }} style={STYLES.image} />
-            )}
-            keyExtractor={(item, index) => index.toString()}
-          />
+          <ScrollView style = {STYLES.scrollView}> 
+            <FlatList
+              data={media} 
+              renderItem={({ item }) => (
+                <Image source={{ uri: item.url }} style={STYLES.image} />
+              )}
+              keyExtractor={(item, index) => index.toString()}
+              horizontal={true}
+            /> 
+          </ScrollView>
+          
 
         </>
       )}
