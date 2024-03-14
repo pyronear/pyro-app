@@ -26,7 +26,7 @@ jobs:
         run: |
           ls -R android/
       - name: Upload Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: app-debug.apk
           path: ./PyroApp/android/app/build/outputs/apk/debug/app-debug.apk
