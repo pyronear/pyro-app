@@ -111,16 +111,15 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
 
           <CustomButton onPress={onLogOutPress} text="Log out" />
 
-          <ScrollView style = {STYLES.scrollView}> 
-            <FlatList
-              data={media} 
-              renderItem={({ item }) => (
-                <Image source={{ uri: item.url }} style={STYLES.image} />
-              )}
-              keyExtractor={(item, index) => index.toString()}
-              horizontal={true}
-            /> 
-          </ScrollView>
+           
+          <FlatList style = {STYLES.scrollView}
+            data={media} 
+            renderItem={({ item }) => (
+              <Image source={{ uri: item.url }} style={STYLES.image} />
+            )}
+            keyExtractor={(item, index) => index.toString()}
+            horizontal={true}
+          /> 
           
 
         </>

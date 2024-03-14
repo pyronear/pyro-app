@@ -111,12 +111,7 @@ export const STYLES = {
   },
   // Image
   scrollView: {
-    position: 'absolute',
-    bottom: 0, // Positionné au bas de l'écran
-    left: 0,
-    right: 0,
-    height: 200, // Hauteur fixe du ScrollView
-    // Ajoutez d'autres styles pour le ScrollView ici si nécessaire
+    marginTop: 250,
   },
   image: {
     width: 100,
