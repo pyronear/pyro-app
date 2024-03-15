@@ -109,4 +109,13 @@ export const STYLES = {
       marginRight: 15,
     },
   },
+  // Image
+  scrollView: {
+    marginTop: 250,
+  },
+  image: {
+    width: 100,
+    height: 100,
+    resizeMode: 'contain',
+  },
 };

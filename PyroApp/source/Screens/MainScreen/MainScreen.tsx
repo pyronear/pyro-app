@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, ViewStyle} from 'react-native';
+import {View, Text, Image,  ViewStyle} from 'react-native';
 import {alertsService, Alert} from '../../../services/alerts.service';
 import CustomButton from '../../Components/CustomButton';
 import {authService} from '../../../services/auth.service';
@@ -11,10 +11,13 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {STYLES} from '../../styles';
 import {MainNavigationProps} from '../../Navigation';
+import { FlatList, ScrollView } from 'react-native';
 
 const MainScreen = ({route, navigation}: MainNavigationProps) => {
   const alertId: number = route.params.alertId;
   const [alert, setAlert] = useState<Alert | undefined>(undefined);
+  const [media, setMedia] = useState<any[] | undefined>(undefined);
+  const [alerts_from_event, setAFE] = useState<any[] | undefined>(undefined);
   const [mapCenter, setMapCenter] = useState<LatLng | undefined>({
     lat: 44.6,
     lng: 4.52,
@@ -50,6 +53,35 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
     fetchData();
   }, [alertId]);
 
+  useEffect(() => {
+    const fetchAFE = async () => {
+      try {
+        if (alert && alert.event_id) {
+          const res3: any[] = await alertsService.getAlertsFromEvent(alert.event_id);
+
+          setAFE(res3);
+          
+          if (res3) {
+            const mediaPromises = res3.map(async (alertFromEvent: Alert) => {
+              if (alertFromEvent.media_id) {
+                return alertsService.getMedia(alertFromEvent.media_id);
+              } else {
+                return null;
+              }
+            });
+
+            const mediaResults = await Promise.all(mediaPromises);
+            setMedia(mediaResults);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching Alerts From Event:', error);
+      }
+    };
+
+    fetchAFE();
+  }, [alert]);
+
   return (
     <SafeAreaView>
       <Text> Détails de l'alerte {alertId} </Text>
@@ -82,6 +114,18 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
           <Text>Azimuth: {alert.azimuth}°</Text>
 
           <CustomButton onPress={onLogOutPress} text="Log out" />
+
+           
+          <FlatList style = {STYLES.scrollView}
+            data={media} 
+            renderItem={({ item }) => (
+              <Image source={{ uri: item.url }} style={STYLES.image} />
+            )}
+            keyExtractor={(item, index) => index.toString()}
+            horizontal={true}
+          /> 
+          
+
         </>
       )}
     </SafeAreaView>

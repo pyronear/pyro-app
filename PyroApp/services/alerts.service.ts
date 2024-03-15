@@ -27,6 +27,16 @@ async function getAlert(alertId: number): Promise<Alert> {
   return response.data;
 }
 
+async function getMedia(media_id: number) {
+  const response = await apiClient.get(`/media/${media_id}/url`);
+  return response.data
+}
+
+async function getAlertsFromEvent(event_id: number) {
+  const response = await apiClient.get(`/events/${event_id}/alerts`)
+  return response.data
+}
+
 // Fonction pour convertir les degrés en radians
 function toRadians(degrees: number): number {
   return degrees * (Math.PI / 180);
@@ -69,5 +79,7 @@ function calculateCoordinatesTriangle(alert: Alert): LatLng[] {
 export const alertsService = {
   getAlerts,
   getAlert,
+  getMedia,
+  getAlertsFromEvent,
   calculateCoordinatesTriangle,
 };
