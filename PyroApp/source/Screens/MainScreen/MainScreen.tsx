@@ -1,7 +1,18 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
-import {View, Text, Image, ViewStyle, ImageStyle, Button} from 'react-native';
-import {alertsService, Alert} from '../../../services/alerts.service';
+import {
+  View,
+  Text,
+  Image,
+  ViewStyle,
+  ImageStyle,
+  Button,
+  Pressable,
+  PressableProps,
+  Alert,
+} from 'react-native';
+
+import {alertsService} from '../../../services/alerts.service';
 import CustomButton from '../../Components/CustomButton';
 import {authService} from '../../../services/auth.service';
 import {
@@ -13,6 +24,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {COLORS, STYLES} from '../../styles';
 import {MainNavigationProps} from '../../Navigation';
 import {FlatList} from 'react-native';
+import Clipboard from '@react-native-community/clipboard';
 
 const MainScreen = ({route, navigation}: MainNavigationProps) => {
   const alertId: number = route.params.alertId;
@@ -32,6 +44,12 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
     await authService.removeToken();
     setAlert(undefined);
     navigation.navigate('Signin');
+  }
+
+  function copyLinkToClipBoard() {
+    const linkToCopy = 'https://pyronear.org/';
+    Clipboard.setString(linkToCopy);
+    console.warn('Lien vers la plateforme copié');
   }
 
   useEffect(() => {
@@ -88,7 +106,6 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
   return (
     <SafeAreaView
       style={{
-        //flex: 1,
         marginHorizontal: 20,
       }}>
       <View style={{alignItems: 'center', marginBottom: 30}}>
@@ -150,16 +167,15 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
             keyExtractor={(item, index) => index.toString()}
             horizontal={true}
           />
-          <Text
-            style={{
-              fontWeight: 'bold',
-              color: 'black',
-              fontSize: 15,
-              marginBottom: 5,
-            }}>
-            Partager le rapport:
-          </Text>
-          <Button title="Copier le lien" />
+          <Pressable
+            style={STYLES.link_button as PressableProps}
+            onPress={copyLinkToClipBoard}>
+            <Image
+              source={require('../../../assets/lien.png')}
+              style={STYLES.link}
+            />
+            <Text>Copier le lien</Text>
+          </Pressable>
           <CustomButton
             text="Acquitter l'alerte"
             type="PRIMARY"

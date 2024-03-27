@@ -61,6 +61,25 @@ export const STYLES = {
     width: 139,
     height: 29,
   },
+  // Link png
+  link: {
+    width: 15,
+    height: 15,
+    marginRight: 5,
+  },
+  link_button: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 10,
+    flexDirection: 'row',
+    borderRadius: 5,
+    shadowColor: 'rgba(0, 0, 0, 0.5)',
+    shadowOffset: {width: 0, height: 5},
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    backgroundColor: 'white',
+    paddingVertical: 10,
+  },
   // Error text SignIn
   error_text_signin: {
     paddingHorizontal: 10,
