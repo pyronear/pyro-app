@@ -32,6 +32,7 @@ export const STYLES = {
   },
   container_button_PRIMARY: {
     backgroundColor: COLORS.background_home,
+    borderRadius: 5,
   },
   container_button_TERTIARY: {},
 
@@ -70,10 +71,12 @@ export const STYLES = {
   // Map View
   map_view: {
     position: 'absolute',
-    top: 200,
+    top: 100,
     left: 0,
     width: '100%',
     height: 200,
+    borderRadius: 20,
+    backgroundColor: 'red',
   },
   // header list
   alerts_list: {
@@ -111,11 +114,13 @@ export const STYLES = {
   },
   // Image
   scrollView: {
-    marginTop: 250,
+    marginTop: 230,
   },
   image: {
-    width: 100,
-    height: 100,
-    resizeMode: 'contain',
+    width: 300,
+    height: 200,
+    marginRight: 5,
+    marginBottom: 8,
+    borderRadius: 10,
   },
 };

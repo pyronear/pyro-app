@@ -1,5 +1,6 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
-import {View, Text, Image,  ViewStyle} from 'react-native';
+import {View, Text, Image, ViewStyle, ImageStyle, Button} from 'react-native';
 import {alertsService, Alert} from '../../../services/alerts.service';
 import CustomButton from '../../Components/CustomButton';
 import {authService} from '../../../services/auth.service';
@@ -9,9 +10,9 @@ import {
   MapShapeType,
 } from '@charlespalmerbf/react-native-leaflet-js';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {STYLES} from '../../styles';
+import {COLORS, STYLES} from '../../styles';
 import {MainNavigationProps} from '../../Navigation';
-import { FlatList, ScrollView } from 'react-native';
+import {FlatList} from 'react-native';
 
 const MainScreen = ({route, navigation}: MainNavigationProps) => {
   const alertId: number = route.params.alertId;
@@ -57,10 +58,12 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
     const fetchAFE = async () => {
       try {
         if (alert && alert.event_id) {
-          const res3: any[] = await alertsService.getAlertsFromEvent(alert.event_id);
+          const res3: any[] = await alertsService.getAlertsFromEvent(
+            alert.event_id,
+          );
 
           setAFE(res3);
-          
+
           if (res3) {
             const mediaPromises = res3.map(async (alertFromEvent: Alert) => {
               if (alertFromEvent.media_id) {
@@ -83,8 +86,24 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
   }, [alert]);
 
   return (
-    <SafeAreaView>
-      <Text> Détails de l'alerte {alertId} </Text>
+    <SafeAreaView
+      style={{
+        //flex: 1,
+        marginHorizontal: 20,
+      }}>
+      <View style={{alignItems: 'center', marginBottom: 30}}>
+        <Text style={{marginTop: 5, color: COLORS.grey_text}}>
+          Alerte ID{alertId}
+        </Text>
+        <View style={{position: 'absolute', top: 0, right: 0}}>
+          <Button
+            onPress={onLogOutPress}
+            title="Log out"
+            color={COLORS.background_home}
+          />
+        </View>
+      </View>
+
       {alert === undefined ? (
         <Text>Loading...</Text>
       ) : (
@@ -107,25 +126,47 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
               mapCenterPosition={mapCenter}
             />
           </View>
-          <Text>Date de création: {alert.created_at}</Text>
-          <Text>ID de l'événement: {alert.event_id}</Text>
-          <Text>Latitude: {alert.lat}</Text>
-          <Text>Longitude: {alert.lon}</Text>
-          <Text>Azimuth: {alert.azimuth}°</Text>
-
-          <CustomButton onPress={onLogOutPress} text="Log out" />
-
-           
-          <FlatList style = {STYLES.scrollView}
-            data={media} 
-            renderItem={({ item }) => (
-              <Image source={{ uri: item.url }} style={STYLES.image} />
+          <Text
+            style={{
+              fontWeight: 'bold',
+              color: 'black',
+              fontSize: 15,
+              marginBottom: 5,
+            }}>
+            Caméra {alert.device_id} Azimuth {alert.azimuth}°
+          </Text>
+          <Text style={{color: COLORS.grey_text, fontSize: 12}}>
+            {alert.created_at}
+          </Text>
+          <FlatList
+            style={STYLES.scrollView}
+            data={media}
+            renderItem={({item}) => (
+              <Image
+                source={{uri: item.url}}
+                style={STYLES.image as ImageStyle}
+              />
             )}
             keyExtractor={(item, index) => index.toString()}
             horizontal={true}
-          /> 
-          
-
+          />
+          <Text
+            style={{
+              fontWeight: 'bold',
+              color: 'black',
+              fontSize: 15,
+              marginBottom: 5,
+            }}>
+            Partager le rapport:
+          </Text>
+          <Button title="Copier le lien" />
+          <CustomButton
+            text="Acquitter l'alerte"
+            type="PRIMARY"
+            onPress={() => {
+              return null;
+            }}
+          />
         </>
       )}
     </SafeAreaView>
