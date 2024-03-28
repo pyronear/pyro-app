@@ -17,6 +17,7 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
   const alertId: number = route.params.alertId;
   const [alert, setAlert] = useState<Alert | undefined>(undefined);
   const [media, setMedia] = useState<any[] | undefined>(undefined);
+  const [localert, setLocalert] = useState<any[] | undefined>(undefined);
   const [alerts_from_event, setAFE] = useState<any[] | undefined>(undefined);
   const [mapCenter, setMapCenter] = useState<LatLng | undefined>({
     lat: 44.6,
@@ -58,7 +59,6 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
       try {
         if (alert && alert.event_id) {
           const res3: any[] = await alertsService.getAlertsFromEvent(alert.event_id);
-
           setAFE(res3);
           
           if (res3) {
@@ -69,7 +69,8 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
                 return null;
               }
             });
-
+            const Localert = res3.map(alerti => alerti.localization);
+            setLocalert(Localert);
             const mediaResults = await Promise.all(mediaPromises);
             setMedia(mediaResults);
           }
@@ -81,6 +82,7 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
 
     fetchAFE();
   }, [alert]);
+  console.log(localert);
 
   return (
     <SafeAreaView>
