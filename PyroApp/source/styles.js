@@ -132,11 +132,18 @@ export const STYLES = {
       fontSize: 15,
       marginBottom: 5,
     },
-    circle: {
+    orange_circle: {
       height: 30,
       width: 30,
       borderRadius: 15,
       backgroundColor: 'orange',
+      marginRight: 15,
+    },
+    green_circle: {
+      height: 30,
+      width: 30,
+      borderRadius: 15,
+      backgroundColor: 'green',
       marginRight: 15,
     },
   },
