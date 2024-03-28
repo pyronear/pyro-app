@@ -1,3 +1,4 @@
+import {formatToLongDate} from '../utils/date';
 import apiClient from './apiClient.service';
 
 export type Event = {
@@ -21,6 +22,12 @@ async function getEvents(): Promise<Event[]> {
   return response.data;
 }
 
+async function getEvent(eventId: number): Promise<Event> {
+  let response = await apiClient.get(`/events/${eventId}/`);
+  response.data.created_at = formatToLongDate(response.data.created_at);
+  return response.data;
+}
+
 async function acknowledgeEvent(event_id: number): Promise<void> {
   try {
     await apiClient.put(`/events/${event_id}/acknowledge`);
@@ -31,6 +38,7 @@ async function acknowledgeEvent(event_id: number): Promise<void> {
 
 export const eventsService = {
   getEvents,
+  getEvent,
   getUnacknowledgedEvents,
   acknowledgeEvent,
 };

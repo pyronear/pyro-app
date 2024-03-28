@@ -9,7 +9,6 @@ import {
   Button,
   Pressable,
   PressableProps,
-  Alert,
 } from 'react-native';
 
 import {alertsService} from '../../../services/alerts.service';
@@ -25,14 +24,15 @@ import {COLORS, STYLES} from '../../styles';
 import {MainNavigationProps} from '../../Navigation';
 import {FlatList} from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
-import {eventsService} from '../../../services/events.service';
+import {Event, eventsService} from '../../../services/events.service';
+import {Alert} from '../../../services/alerts.service';
 
 const MainScreen = ({route, navigation}: MainNavigationProps) => {
   const alertId: number = route.params.alertId;
-  const [alert, setAlert] = useState<Alert | undefined>(undefined);
+  const [alert, setAlert] = useState<Event | undefined>(undefined);
   const [isAcknowledged, setIsAcknowledged] = useState<boolean>(false);
   const [media, setMedia] = useState<any[] | undefined>(undefined);
-  const [alerts_from_event, setAFE] = useState<any[] | undefined>(undefined);
+  const [alerts_from_event, setAFE] = useState<Alert[] | undefined>(undefined);
   const [mapCenter, setMapCenter] = useState<LatLng | undefined>({
     lat: 44.6,
     lng: 4.52,
@@ -49,7 +49,7 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
   }
 
   async function acknowledgeEvent() {
-    await eventsService.acknowledgeEvent(alert.event_id);
+    await eventsService.acknowledgeEvent(alertId);
     setIsAcknowledged(true);
   }
 
@@ -62,15 +62,12 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res: Alert = await alertsService.getAlert(alertId);
+        const res: Event = await eventsService.getEvent(alertId);
         setAlert(res);
         setMapCenter({
           lat: res.lat,
           lng: res.lon,
         });
-        const calculatedCoordinates: LatLng[] =
-          alertsService.calculateCoordinatesTriangle(res);
-        setTriangleCoordinates(calculatedCoordinates);
       } catch (error) {
         console.error('Error fetching alert details:', error);
       }
@@ -82,25 +79,24 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
   useEffect(() => {
     const fetchAFE = async () => {
       try {
-        if (alert && alert.event_id) {
-          const res3: any[] = await alertsService.getAlertsFromEvent(
-            alert.event_id,
-          );
+        const res3: Alert[] = await alertsService.getAlertsFromEvent(alertId);
+        setAFE(res3);
 
-          setAFE(res3);
+        if (res3) {
+          const mediaPromises = res3.map(async (alertFromEvent: Alert) => {
+            if (alertFromEvent.media_id) {
+              return alertsService.getMedia(alertFromEvent.media_id);
+            } else {
+              return null;
+            }
+          });
 
-          if (res3) {
-            const mediaPromises = res3.map(async (alertFromEvent: Alert) => {
-              if (alertFromEvent.media_id) {
-                return alertsService.getMedia(alertFromEvent.media_id);
-              } else {
-                return null;
-              }
-            });
+          const mediaResults = await Promise.all(mediaPromises);
+          setMedia(mediaResults);
 
-            const mediaResults = await Promise.all(mediaPromises);
-            setMedia(mediaResults);
-          }
+          const calculatedCoordinates: LatLng[] =
+            alertsService.calculateCoordinatesTriangle(res3[0]);
+          setTriangleCoordinates(calculatedCoordinates);
         }
       } catch (error) {
         console.error('Error fetching Alerts From Event:', error);
@@ -108,7 +104,7 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
     };
 
     fetchAFE();
-  }, [alert]);
+  }, [alertId]);
 
   return (
     <SafeAreaView
@@ -128,7 +124,7 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
         </View>
       </View>
 
-      {alert === undefined ? (
+      {alert === undefined || alerts_from_event === undefined ? (
         <Text>Loading...</Text>
       ) : (
         <>
@@ -157,7 +153,8 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
               fontSize: 15,
               marginBottom: 5,
             }}>
-            Caméra {alert.device_id} Azimuth {alert.azimuth}°
+            Caméra {alerts_from_event[0].device_id} Azimuth{' '}
+            {alerts_from_event[0].azimuth}°
           </Text>
           <Text style={{color: COLORS.grey_text, fontSize: 12}}>
             {alert.created_at}
