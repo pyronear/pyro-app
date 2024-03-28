@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {FlatList, Image, Text, View} from 'react-native';
 import AlertItem from '../../Components/AlertItem';
 import {AlertsListNavigationProps} from '../../Navigation';

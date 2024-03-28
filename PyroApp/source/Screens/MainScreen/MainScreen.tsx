@@ -64,26 +64,13 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
   }
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res: Event = await eventsService.getEvent(alertId);
-        setAlert(res);
-        setIsAcknowledged(res.is_acknowledged);
-        setMapCenter({
-          lat: res.lat,
-          lng: res.lon,
-        });
-      } catch (error) {
-        console.error('Error fetching alert details:', error);
-      }
-    };
-
-    fetchData();
-  }, [alertId]);
-
-  useEffect(() => {
     const fetchAFE = async () => {
       try {
+        const res: Event = await eventsService.getEvent(alertId);
+        console.log('EVENT', res);
+        setAlert(res);
+        setIsAcknowledged(res.is_acknowledged);
+
         const res3: Alert[] = await alertsService.getAlertsFromEvent(alertId);
         setAFE(res3);
 
@@ -98,7 +85,12 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
 
           const mediaResults = await Promise.all(mediaPromises);
           setMedia(mediaResults);
-
+          console.log('PREMIERE ALERTE', res3[0]);
+          setMapCenter({
+            lat: res3[0].lat,
+            lng: res3[0].lon,
+          });
+          console.log('CENTRE', mapCenter);
           const calculatedCoordinates: LatLng[] =
             alertsService.calculateCoordinatesTriangle(res3[0]);
           setTriangleCoordinates(calculatedCoordinates);
