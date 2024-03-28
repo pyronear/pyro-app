@@ -9,7 +9,7 @@ export type Event = {
   type: string;
   start_ts: string;
   end_ts: string;
-  is_acknowledged: string;
+  is_acknowledged: boolean;
 };
 
 async function getUnacknowledgedEvents(): Promise<Event[]> {

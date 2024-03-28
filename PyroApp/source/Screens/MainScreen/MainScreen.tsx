@@ -48,6 +48,10 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
     navigation.navigate('Signin');
   }
 
+  function onReturnPress() {
+    navigation.navigate('AlertsList');
+  }
+
   async function acknowledgeEvent() {
     await eventsService.acknowledgeEvent(alertId);
     setIsAcknowledged(true);
@@ -64,6 +68,7 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
       try {
         const res: Event = await eventsService.getEvent(alertId);
         setAlert(res);
+        setIsAcknowledged(res.is_acknowledged);
         setMapCenter({
           lat: res.lat,
           lng: res.lon,
@@ -111,17 +116,25 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
       style={{
         marginHorizontal: 20,
       }}>
-      <View style={{alignItems: 'center', marginBottom: 30}}>
+      <View
+        style={{
+          justifyContent: 'space-between',
+          marginBottom: 20,
+          flexDirection: 'row',
+        }}>
+        <Button
+          onPress={onReturnPress}
+          title="Retour"
+          color={COLORS.background_home}
+        />
         <Text style={{marginTop: 5, color: COLORS.grey_text}}>
           Alerte ID{alertId}
         </Text>
-        <View style={{position: 'absolute', top: 0, right: 0}}>
-          <Button
-            onPress={onLogOutPress}
-            title="Log out"
-            color={COLORS.background_home}
-          />
-        </View>
+        <Button
+          onPress={onLogOutPress}
+          title="Log out"
+          color={COLORS.background_home}
+        />
       </View>
 
       {alert === undefined || alerts_from_event === undefined ? (
