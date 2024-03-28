@@ -25,10 +25,12 @@ import {COLORS, STYLES} from '../../styles';
 import {MainNavigationProps} from '../../Navigation';
 import {FlatList} from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
+import {eventsService} from '../../../services/events.service';
 
 const MainScreen = ({route, navigation}: MainNavigationProps) => {
   const alertId: number = route.params.alertId;
   const [alert, setAlert] = useState<Alert | undefined>(undefined);
+  const [isAcknowledged, setIsAcknowledged] = useState<boolean>(false);
   const [media, setMedia] = useState<any[] | undefined>(undefined);
   const [alerts_from_event, setAFE] = useState<any[] | undefined>(undefined);
   const [mapCenter, setMapCenter] = useState<LatLng | undefined>({
@@ -44,6 +46,11 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
     await authService.removeToken();
     setAlert(undefined);
     navigation.navigate('Signin');
+  }
+
+  async function acknowledgeEvent() {
+    await eventsService.acknowledgeEvent(alert.event_id);
+    setIsAcknowledged(true);
   }
 
   function copyLinkToClipBoard() {
@@ -178,10 +185,8 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
           </Pressable>
           <CustomButton
             text="Acquitter l'alerte"
-            type="PRIMARY"
-            onPress={() => {
-              return null;
-            }}
+            disabled={isAcknowledged}
+            onPress={acknowledgeEvent}
           />
         </>
       )}

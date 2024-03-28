@@ -4,6 +4,7 @@ export const COLORS = {
   background_input: 'white',
   white_text: 'white',
   grey_text: 'grey',
+  light_grey: '#D3D3D3',
   border_input: '#e8e8e8',
   // Ajoutez d'autres couleurs si nécessaire
 };
@@ -36,6 +37,10 @@ export const STYLES = {
   },
   container_button_TERTIARY: {},
 
+  disabled_container: {
+    backgroundColor: COLORS.grey_text,
+  },
+
   text_button: {
     fontWeight: 'bold',
     color: COLORS.white_text,
@@ -43,6 +48,10 @@ export const STYLES = {
   text_button_Primary: {},
   text_button_TERTIARY: {
     color: COLORS.grey_text,
+  },
+
+  disabled_text: {
+    color: COLORS.light_grey,
   },
   // Input
   input: {
