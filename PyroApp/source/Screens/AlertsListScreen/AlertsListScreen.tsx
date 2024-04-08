@@ -1,25 +1,28 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {FlatList, Image, Text, View} from 'react-native';
-import {Alert, alertsService} from '../../../services/alerts.service';
 import AlertItem from '../../Components/AlertItem';
 import {AlertsListNavigationProps} from '../../Navigation';
 import {STYLES} from '../../styles';
+import {Event, eventsService} from '../../../services/events.service';
+import {useFocusEffect} from '@react-navigation/native';
 
 function AlertsListScreen({navigation}: AlertsListNavigationProps) {
-  const [alerts, setAlerts] = useState<Alert[] | undefined>(undefined);
+  const [alerts, setAlerts] = useState<Event[] | undefined>(undefined);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res: Alert[] = await alertsService.getAlerts();
-        setAlerts(res);
-      } catch (error) {
-        console.error('Error fetching alerts:', error);
-      }
-    };
+  useFocusEffect(
+    useCallback(() => {
+      const fetchData = async () => {
+        try {
+          const res: Event[] = await eventsService.getEvents();
+          setAlerts(res);
+        } catch (error) {
+          console.error('Error fetching alerts:', error);
+        }
+      };
 
-    fetchData();
-  }, []);
+      fetchData();
+    }, []),
+  );
 
   const navigateToMainScreen = (alertId: number) => {
     navigation.navigate('Main', {alertId: alertId});

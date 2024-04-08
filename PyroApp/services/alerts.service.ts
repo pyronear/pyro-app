@@ -1,5 +1,6 @@
 import {LatLng} from '@charlespalmerbf/react-native-leaflet-js';
 import apiClient from './apiClient.service';
+import {formatToLongDate} from '../utils/date';
 
 const CAMERA_OPENING_ANGLE = 87;
 const CAMERA_RANGE_KM = 15;
@@ -23,18 +24,19 @@ async function getAlerts(): Promise<Alert[]> {
 }
 
 async function getAlert(alertId: number): Promise<Alert> {
-  const response = await apiClient.get(`/alerts/${alertId}/`);
+  let response = await apiClient.get(`/alerts/${alertId}/`);
+  response.data.created_at = formatToLongDate(response.data.created_at);
   return response.data;
 }
 
 async function getMedia(media_id: number) {
   const response = await apiClient.get(`/media/${media_id}/url`);
-  return response.data
+  return response.data;
 }
 
 async function getAlertsFromEvent(event_id: number) {
-  const response = await apiClient.get(`/events/${event_id}/alerts`)
-  return response.data
+  const response = await apiClient.get(`/events/${event_id}/alerts`);
+  return response.data;
 }
 
 // Fonction pour convertir les degrés en radians
