@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {View, Text, Image,  ViewStyle} from 'react-native';
 import {alertsService, Alert} from '../../../services/alerts.service';
 import CustomButton from '../../Components/CustomButton';
@@ -12,6 +12,8 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {STYLES} from '../../styles';
 import {MainNavigationProps} from '../../Navigation';
 import { FlatList, ScrollView } from 'react-native';
+import Canvas from 'react-native-canvas';
+import { drawRectangles } from '../../../services/drawRectangle.service';
 
 const MainScreen = ({route, navigation}: MainNavigationProps) => {
   const alertId: number = route.params.alertId;
@@ -118,16 +120,27 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
           <CustomButton onPress={onLogOutPress} text="Log out" />
 
            
-          <FlatList style = {STYLES.scrollView}
-            data={media} 
-            renderItem={({ item }) => (
-              <Image source={{ uri: item.url }} style={STYLES.image} />
+          <FlatList
+            data={media}
+            renderItem={({ item, index }) => (
+              <View style={{ position: 'relative'}}>
+                <Image source={{ uri: item["url"] }} style={{ width: 200, height: 200 }} />
+                {localert && localert[index] && (
+                  <Canvas
+                    ref={(canvas: any) => {
+                      if (!canvas) return;
+                      console.debug(canvas.width, canvas.height);
+                      const ctx = canvas.getContext('2d');
+                      drawRectangles(ctx, localert[index])
+                    }}
+                    style={{ position: 'absolute', top: 0, left: 0, width: 200, height: 200 }}
+                  />
+                )}
+              </View>
             )}
             keyExtractor={(item, index) => index.toString()}
             horizontal={true}
-          /> 
-          
-
+          />
         </>
       )}
     </SafeAreaView>
