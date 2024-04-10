@@ -7,7 +7,7 @@ export function drawRectangles(canvasContext: CanvasRenderingContext2D, localiza
         if (localization === "[]" || !canvasContext)
           return;
         const coords: Coord = JSON.parse(localization)[0];
-        const totalW = 200;
+        const totalW = 300;
         const totalH = 200;
         const [x1, y1, x2, y2, _] = coords;
         console.log(coords);
