@@ -5,7 +5,6 @@ import {
   Text,
   Image,
   ViewStyle,
-  ImageStyle,
   Button,
   Pressable,
   PressableProps,
@@ -26,12 +25,15 @@ import {FlatList} from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
 import {Event, eventsService} from '../../../services/events.service';
 import {Alert} from '../../../services/alerts.service';
+import Canvas from 'react-native-canvas';
+import {drawRectangles} from '../../../services/drawRectangle.service';
 
 const MainScreen = ({route, navigation}: MainNavigationProps) => {
   const alertId: number = route.params.alertId;
   const [alert, setAlert] = useState<Event | undefined>(undefined);
   const [isAcknowledged, setIsAcknowledged] = useState<boolean>(false);
   const [media, setMedia] = useState<any[] | undefined>(undefined);
+  const [localert, setLocalert] = useState<any[] | undefined>(undefined);
   const [alerts_from_event, setAFE] = useState<Alert[] | undefined>(undefined);
   const [mapCenter, setMapCenter] = useState<LatLng | undefined>({
     lat: 44.6,
@@ -69,7 +71,6 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
         const res: Event = await eventsService.getEvent(alertId);
         setAlert(res);
         setIsAcknowledged(res.is_acknowledged);
-
         const res3: Alert[] = await alertsService.getAlertsFromEvent(alertId);
         setAFE(res3);
 
@@ -81,7 +82,8 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
               return null;
             }
           });
-
+          const Localert = res3.map(alerti => alerti.localization);
+          setLocalert(Localert);
           const mediaResults = await Promise.all(mediaPromises);
           setMedia(mediaResults);
           setMapCenter({
@@ -130,24 +132,28 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
         <Text>Loading...</Text>
       ) : (
         <>
-          <View style={STYLES.map_view as ViewStyle}>
-            <LeafletView
-              mapShapes={[
-                {
-                  shapeType: MapShapeType.POLYGON,
-                  positions: triangleCoordinates,
-                  color: 'red',
-                },
-                {
-                  shapeType: MapShapeType.CIRCLE,
-                  center: [mapCenter.lat, mapCenter.lng],
-                  radius: 400,
-                  color: 'red',
-                },
-              ]}
-              mapCenterPosition={mapCenter}
-            />
-          </View>
+          {mapCenter && triangleCoordinates ? (
+            <View style={STYLES.map_view as ViewStyle}>
+              <LeafletView
+                mapShapes={[
+                  {
+                    shapeType: MapShapeType.POLYGON,
+                    positions: triangleCoordinates,
+                    color: 'red',
+                  },
+                  {
+                    shapeType: MapShapeType.CIRCLE,
+                    center: [mapCenter.lat, mapCenter.lng],
+                    radius: 400,
+                    color: 'red',
+                  },
+                ]}
+                mapCenterPosition={mapCenter}
+              />
+            </View>
+          ) : (
+            <Text>Calculating map data </Text>
+          )}
           <Text
             style={{
               fontWeight: 'bold',
@@ -162,13 +168,29 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
             {alert.created_at}
           </Text>
           <FlatList
-            style={STYLES.scrollView}
             data={media}
-            renderItem={({item}) => (
-              <Image
-                source={{uri: item.url}}
-                style={STYLES.image as ImageStyle}
-              />
+            style={STYLES.scrollView}
+            renderItem={({item, index}) => (
+              <>
+                <Image source={{uri: item['url']}} style={STYLES.image} />
+                {localert && localert[index] && (
+                  <Canvas
+                    ref={(canvas: any) => {
+                      if (!canvas) return;
+                      console.debug(canvas.width, canvas.height);
+                      const ctx = canvas.getContext('2d');
+                      drawRectangles(ctx, localert[index]);
+                    }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: 300,
+                      height: 200,
+                    }}
+                  />
+                )}
+              </>
             )}
             keyExtractor={(item, index) => index.toString()}
             horizontal={true}
