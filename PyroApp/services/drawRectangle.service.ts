@@ -10,7 +10,9 @@ export function drawRectangles(canvasContext: CanvasRenderingContext2D, localiza
         const totalW = 300;
         const totalH = 200;
         const [x1, y1, x2, y2, _] = coords;
+        console.log(JSON.parse(localization));
         console.log(coords);
+        console.log(x1, y1, x2, y2)
         console.log(x1*totalW, y1*totalH, (x2 - x1)*totalW, (y2 - y1)*totalH);
 
         canvasContext.beginPath();

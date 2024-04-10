@@ -134,24 +134,28 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
         <Text>Loading...</Text>
       ) : (
         <>
-          <View style={STYLES.map_view as ViewStyle}>
-            <LeafletView
-              mapShapes={[
-                {
-                  shapeType: MapShapeType.POLYGON,
-                  positions: triangleCoordinates,
-                  color: 'red',
-                },
-                {
-                  shapeType: MapShapeType.CIRCLE,
-                  center: [mapCenter.lat, mapCenter.lng],
-                  radius: 400,
-                  color: 'red',
-                },
-              ]}
-              mapCenterPosition={mapCenter}
-            />
-          </View>
+          {mapCenter && triangleCoordinates ? (
+            <View style={STYLES.map_view as ViewStyle}>
+              <LeafletView
+                mapShapes={[
+                  {
+                    shapeType: MapShapeType.POLYGON,
+                    positions: triangleCoordinates,
+                    color: 'red',
+                  },
+                  {
+                    shapeType: MapShapeType.CIRCLE,
+                    center: [mapCenter.lat, mapCenter.lng],
+                    radius: 400,
+                    color: 'red',
+                  },
+                ]}
+                mapCenterPosition={mapCenter}
+              />
+            </View>
+          ) : (
+            <Text>Calculating map data </Text>
+          )}
           <Text
             style={{
               fontWeight: 'bold',
