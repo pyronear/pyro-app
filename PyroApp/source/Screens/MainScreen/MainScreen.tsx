@@ -1,11 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
   Image,
   ViewStyle,
-  ImageStyle,
   Button,
   Pressable,
   PressableProps,
@@ -27,7 +26,7 @@ import Clipboard from '@react-native-community/clipboard';
 import {Event, eventsService} from '../../../services/events.service';
 import {Alert} from '../../../services/alerts.service';
 import Canvas from 'react-native-canvas';
-import { drawRectangles } from '../../../services/drawRectangle.service';
+import {drawRectangles} from '../../../services/drawRectangle.service';
 
 const MainScreen = ({route, navigation}: MainNavigationProps) => {
   const alertId: number = route.params.alertId;
@@ -83,8 +82,8 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
               return null;
             }
           });
-            const Localert = res3.map(alerti => alerti.localization);
-            setLocalert(Localert);
+          const Localert = res3.map(alerti => alerti.localization);
+          setLocalert(Localert);
           const mediaResults = await Promise.all(mediaPromises);
           setMedia(mediaResults);
           setMapCenter({
@@ -102,7 +101,6 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
 
     fetchAFE();
   }, [alertId]);
-  console.log(localert);
 
   return (
     <SafeAreaView
@@ -171,21 +169,28 @@ const MainScreen = ({route, navigation}: MainNavigationProps) => {
           </Text>
           <FlatList
             data={media}
-            renderItem={({ item, index }) => (
-              <View style={STYLES.scrollView}>
-                <Image source={{ uri: item["url"] }} style={STYLES.image} />
+            style={STYLES.scrollView}
+            renderItem={({item, index}) => (
+              <>
+                <Image source={{uri: item['url']}} style={STYLES.image} />
                 {localert && localert[index] && (
                   <Canvas
                     ref={(canvas: any) => {
                       if (!canvas) return;
                       console.debug(canvas.width, canvas.height);
                       const ctx = canvas.getContext('2d');
-                      drawRectangles(ctx, localert[index])
+                      drawRectangles(ctx, localert[index]);
                     }}
-                    style={{ position: 'absolute', top: 0, left: 0, width: 300, height: 200 }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: 300,
+                      height: 200,
+                    }}
                   />
                 )}
-              </View>
+              </>
             )}
             keyExtractor={(item, index) => index.toString()}
             horizontal={true}
