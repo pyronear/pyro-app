@@ -14,7 +14,7 @@ function AlertsListScreen({navigation}: AlertsListNavigationProps) {
       const fetchData = async () => {
         try {
           const res: Event[] = await eventsService.getEvents();
-          setAlerts(res);
+          setAlerts(res.reverse());
         } catch (error) {
           console.error('Error fetching alerts:', error);
         }
