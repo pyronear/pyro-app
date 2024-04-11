@@ -5,7 +5,7 @@ on:
     branches:
       - main
       - develop
-      - create-release-apk-in-ci
+      - change-to-prod-endpoint
 
 jobs:
   build:
