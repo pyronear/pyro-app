@@ -4,6 +4,7 @@ export const COLORS = {
   background_input: 'white',
   white_text: 'white',
   grey_text: 'grey',
+  light_grey: '#D3D3D3',
   border_input: '#e8e8e8',
   // Ajoutez d'autres couleurs si nécessaire
 };
@@ -32,8 +33,13 @@ export const STYLES = {
   },
   container_button_PRIMARY: {
     backgroundColor: COLORS.background_home,
+    borderRadius: 5,
   },
   container_button_TERTIARY: {},
+
+  disabled_container: {
+    backgroundColor: COLORS.grey_text,
+  },
 
   text_button: {
     fontWeight: 'bold',
@@ -42,6 +48,10 @@ export const STYLES = {
   text_button_Primary: {},
   text_button_TERTIARY: {
     color: COLORS.grey_text,
+  },
+
+  disabled_text: {
+    color: COLORS.light_grey,
   },
   // Input
   input: {
@@ -60,6 +70,25 @@ export const STYLES = {
     width: 139,
     height: 29,
   },
+  // Link png
+  link: {
+    width: 15,
+    height: 15,
+    marginRight: 5,
+  },
+  link_button: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 10,
+    flexDirection: 'row',
+    borderRadius: 5,
+    shadowColor: 'rgba(0, 0, 0, 0.5)',
+    shadowOffset: {width: 0, height: 5},
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    backgroundColor: 'white',
+    paddingVertical: 10,
+  },
   // Error text SignIn
   error_text_signin: {
     paddingHorizontal: 10,
@@ -70,10 +99,12 @@ export const STYLES = {
   // Map View
   map_view: {
     position: 'absolute',
-    top: 200,
+    top: 110,
     left: 0,
     width: '100%',
     height: 200,
+    borderRadius: 20,
+    backgroundColor: 'red',
   },
   // header list
   alerts_list: {
@@ -101,12 +132,30 @@ export const STYLES = {
       fontSize: 15,
       marginBottom: 5,
     },
-    circle: {
+    orange_circle: {
       height: 30,
       width: 30,
       borderRadius: 15,
       backgroundColor: 'orange',
       marginRight: 15,
     },
+    green_circle: {
+      height: 30,
+      width: 30,
+      borderRadius: 15,
+      backgroundColor: 'green',
+      marginRight: 15,
+    },
+  },
+  // Image
+  scrollView: {
+    marginTop: 230,
+  },
+  image: {
+    width: 300,
+    height: 200,
+    marginRight: 5,
+    marginBottom: 8,
+    borderRadius: 10,
   },
 };
