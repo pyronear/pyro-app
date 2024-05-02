@@ -4,7 +4,8 @@ on:
   push:
     branches:
       - main
-      - build-github-action
+      - develop
+      - change-to-prod-endpoint
 
 jobs:
   build:
@@ -21,13 +22,13 @@ jobs:
           npm install
       - name: Build Android Release
         run: |
-          cd android && ./gradlew assembleDebug --no-daemon
+          cd android && ./gradlew assembleRelease --no-daemon
       - name: List files
         run: |
           ls -R android/
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug.apk
-          path: ./PyroApp/android/app/build/outputs/apk/debug/app-debug.apk
+          name: app-release.apk
+          path: ./PyroApp/android/app/build/outputs/apk/release/app-release.apk
           retention-days: 30

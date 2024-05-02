@@ -2,7 +2,7 @@ import axios from 'axios';
 import {authService} from './auth.service';
 
 const apiClient = axios.create({
-  baseURL: 'https://apidev.pyronear.org',
+  baseURL: 'https://api.pyronear.org',
   timeout: 5000,
   headers: {'Content-Type': 'application/json', Accept: 'application/json'},
 });
