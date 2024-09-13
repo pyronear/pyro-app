@@ -1,0 +1,11 @@
+name: pyro-app
+
+services:
+  app:
+    container_name: pyro-app
+    build: .
+    volumes:
+      - ./PyroApp:/app
+      - /app/node_modules # ignore node_modules
+    network_mode: host
+    restart: unless-stopped
